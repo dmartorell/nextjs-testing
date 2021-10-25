@@ -1,0 +1,57 @@
+.title {
+    font-size: 42 px;
+    margin-bottom: 5px;;
+}
+.subTitle {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.logo {
+    margin-bottom: 1em;
+}
+
+.loginButtonsContainer {
+    margin-top: 6em;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.userInfoContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2em;
+    gap: 8px;
+}
+
+.userName, .email {
+    font-weight: 300;
+    color: var(--secondary-color);
+    margin: 0;
+    font-weight: 300;
+}
+
+.email {
+    font-size: 0.9em;
+}
+
+.avatar {
+    
+    margin: 0 auto;
+    border-radius: 100px;
+}
+
+
+@media (min-width: 650px) 
+{
+    .title {
+        font-size: 48px;
+        margin-bottom: 5px;;
+    }
+    .subTitle {
+        font-size: 21px;
+     }
+} 
