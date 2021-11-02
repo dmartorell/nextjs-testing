@@ -1,57 +1,31 @@
-.title {
-    font-size: 42 px;
-    margin-bottom: 5px;;
-}
-.subTitle {
-    font-size: 16px;
-    font-weight: 300;
-}
-
-.logo {
-    margin-bottom: 1em;
-}
-
-.loginButtonsContainer {
-    margin-top: 6em;
+.header {
+    position: sticky;
+    top: 0px;
+    background-color: #ffffffee;
+    backdrop-filter: blur(3px);    
     display: flex;
-    flex-direction: column;
-    gap: 25px;
+    justify-content: space-between;
     align-items: center;
+    min-height: 50px;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    padding: 0 16px;
 }
 
-.userInfoContainer {
+.nav {
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffffee;
+    backdrop-filter: blur(3px);   
+    border-top: 1px solid #eee;
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    flex-direction: column;
-    margin-top: 2em;
-    gap: 8px;
+    padding: 0 16px;
+    min-height: 50px;
 }
 
-.userName, .email {
-    font-weight: 300;
-    color: var(--secondary-color);
-    margin: 0;
-    font-weight: 300;
+.section {
+    height: 100vh;
 }
-
-.email {
-    font-size: 0.9em;
-}
-
-.avatar {
-    
-    margin: 0 auto;
-    border-radius: 100px;
-}
-
-
-@media (min-width: 650px) 
-{
-    .title {
-        font-size: 48px;
-        margin-bottom: 5px;;
-    }
-    .subTitle {
-        font-size: 21px;
-     }
-} 

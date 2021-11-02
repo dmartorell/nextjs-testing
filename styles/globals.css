@@ -20,6 +20,7 @@ body {
     radial-gradient(var(--secondary-color-transparent) 1px,transparent 1px);
   background-position: 0px 0px, 25px 24px;
   background-size: 50px 50px;
+  overflow: hidden;
 }
 
 a {
@@ -29,6 +30,15 @@ a {
 
 * {
   box-sizing: border-box;
+  margin: 0;
+}
+
+form {
+  width: 100%;
+}
+textarea, input {
+  font-family: var(--base-font);
+  font-size: 1em;
 }
 
 span {
@@ -49,6 +59,12 @@ button {
 
 button:hover {
   background-color: var(--secondary-color);
+}
+button[disabled] {
+  opacity: 0.15;
+  pointer-events: none; /*To avoid the element to recieve any further event*/
+  user-select: none; /*To avoid the user to select the button text*/
+  cursor: not-allowed;
 }
 
 

@@ -8,16 +8,25 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  orderBy,
+} from 'firebase/firestore';
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyC3IBQF9ZmxcDprwleaGT-n_jtnEakAjLM',
-  authDomain: 'ashesapp-616be.firebaseapp.com',
-  projectId: 'ashesapp-616be',
-  storageBucket: 'ashesapp-616be.appspot.com',
-  messagingSenderId: '622725216039',
-  appId: '1:622725216039:web:8e9d9911df6f5902a51b02',
+  apiKey: 'AIzaSyBQqYchfAU20JWWlOhAoWUeiJ3FNQeFQEM',
+  authDomain: 'ashes-11b8a.firebaseapp.com',
+  projectId: 'ashes-11b8a',
+  storageBucket: 'ashes-11b8a.appspot.com',
+  messagingSenderId: '709856273965',
+  appId: '1:709856273965:web:c56f0059c1c69157f3baa4',
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 export const loginWithGitHub = () => {
   const provider = new GithubAuthProvider();
@@ -40,13 +49,41 @@ export const loginWithTwitter = () => {
 export const onUserStateChanged = (onChange) => {
   const auth = getAuth();
   onAuthStateChanged(auth, (result) => {
+    let userValue = null;
     if (result) {
       const {
         displayName: username,
         email,
         photoURL: avatar,
+        uid,
       } = result;
-      onChange({ username, email, avatar });
+      userValue = {
+        username, email, avatar, uid,
+      };
     }
+    return onChange(userValue);
+  });
+};
+
+export const addTweet = async ({
+  userName, content, avatar, userId,
+}) => addDoc(collection(db, 'tweets'), {
+  userName,
+  content,
+  avatar,
+  userId,
+  createdAt: new Date(),
+  likesCOunt: 0,
+  sharedCount: 0,
+});
+
+export const fetchLatestTweets = async () => {
+  const querySnapshot = await getDocs(collection(db, 'tweets').orderBy('createdAt'));
+  return querySnapshot.docs.map((doc) => {
+    const data = doc.data();
+    const { id } = doc;
+    const { createdAt } = data;
+
+    return { ...data, id, createdAt: createdAt.toDate() };
   });
 };

@@ -1,0 +1,46 @@
+.title {
+    font-size: 42 px;
+    margin-bottom: 5px;;
+}
+.subTitle {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.logo {
+    margin-bottom: 1em;
+}
+
+.loginButtonsContainer {
+    margin-top: 6em;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.mainContainer {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: auto 0;
+}
+
+.spinner {
+    margin-top: 5em;
+    width: 75px;
+    height: auto;
+}
+
+@media (min-width: 650px) 
+{
+    .title {
+        font-size: 48px;
+        margin-bottom: 5px;;
+    }
+    .subTitle {
+        font-size: 21px;
+     }
+} 
+
+

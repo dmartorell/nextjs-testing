@@ -1,12 +1,11 @@
-import styles from '../../styles/Button.module.css'
-const Button = ({children, ...props}) => {
-    return (
-        <>
-            <button type="button" className={styles.loginButton} {...props}>
-                {children}
-            </button>
-        </>
-    )
-}
+import styles from '../../styles/Button.module.css';
 
-export default Button
+const Button = ({ children, ...props }) => (
+  <>
+    <button type="button" className={styles.button} {...props}>
+      {children}
+    </button>
+  </>
+);
+
+export default Button;

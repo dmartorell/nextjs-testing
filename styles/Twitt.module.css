@@ -1,0 +1,21 @@
+.avatar {
+    border-radius: 100px;
+}
+
+.twittMessage {
+    margin: 0;
+    line-height: 20px;
+
+}
+.date {
+    color: #555;
+    font-size: 14px;
+}
+.twittContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+}
