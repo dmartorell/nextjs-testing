@@ -1,4 +1,4 @@
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const DATE_UNITS = [
   ['day', 86400],
@@ -6,8 +6,8 @@ const DATE_UNITS = [
   ['minute', 60],
   ['second', 1],
 ];
-const getValuePerTimeUnit = (_tweetDateInSeconds) => {
-  const dateDiff = (_tweetDateInSeconds - Date.now()) / 1000;
+const getValuePerTimeUnit = (_timestamp) => {
+  const dateDiff = (_timestamp - Date.now()) / 1000;
   // eslint-disable-next-line no-restricted-syntax
   for (const [unit, seconds] of DATE_UNITS) {
     if (Math.abs(dateDiff) >= seconds) {
@@ -18,9 +18,18 @@ const getValuePerTimeUnit = (_tweetDateInSeconds) => {
   return null;
 };
 
-const useTimeAgo = (tweetDateInSeconds) => {
-  const { value, unit } = getValuePerTimeUnit(tweetDateInSeconds);
-  const rtf = new Intl.RelativeTimeFormat('es');
+const useTimeAgo = (timestamp) => {
+  const [timeAgo, setTimeAgo] = useState(() => getValuePerTimeUnit(timestamp));
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeAgo(getValuePerTimeUnit(timestamp));
+    }, 14000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+  const { value, unit } = timeAgo;
+  const rtf = new Intl.RelativeTimeFormat('es', { style: 'narrow' });
   return rtf.format(value, unit);
 };
 

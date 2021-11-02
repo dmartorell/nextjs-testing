@@ -1,19 +1,10 @@
-import { useState, useEffect } from 'react';
 import useTimeAgo from '../../hooks/useTimeAgo';
 import styles from '../../styles/Twitt.module.css';
 
 const Twitt = ({
   avatar, userName, content, createdAt,
 }) => {
-  const [timeAgo, setTimeAgo] = useState(() => useTimeAgo(createdAt));
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimeAgo(() => useTimeAgo(createdAt));
-    }, 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  const timeAgo = useTimeAgo(createdAt);
 
   return (
     <article className={styles.twittContainer}>

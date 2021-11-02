@@ -13,7 +13,8 @@ import {
   collection,
   addDoc,
   getDocs,
-  // orderBy,
+  query,
+  orderBy,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -78,7 +79,8 @@ export const addTweet = async ({
 });
 
 export const fetchLatestTweets = async () => {
-  const querySnapshot = await getDocs(collection(db, 'tweets'));
+  const q = query(collection(db, 'tweets'), orderBy('createdAt', 'desc'));
+  const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((doc) => {
     const data = doc.data();
     const { id } = doc;
