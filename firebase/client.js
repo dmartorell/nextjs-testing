@@ -17,6 +17,8 @@ import {
   orderBy,
 } from 'firebase/firestore';
 
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyBQqYchfAU20JWWlOhAoWUeiJ3FNQeFQEM',
   authDomain: 'ashes-11b8a.firebaseapp.com',
@@ -74,7 +76,7 @@ export const addTweet = async ({
   avatar,
   userId,
   createdAt: new Date(),
-  likesCOunt: 0,
+  likesCount: 0,
   sharedCount: 0,
 });
 
@@ -88,4 +90,11 @@ export const fetchLatestTweets = async () => {
 
     return { ...data, id, createdAt: createdAt.toDate() };
   });
+};
+
+export const uploadImage = (file) => {
+  const storage = getStorage();
+  const storageRef = ref(storage, `images/${file.name}`);
+  const task = uploadBytes(storageRef, file);
+  return task;
 };

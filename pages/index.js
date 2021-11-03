@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Button from '../components/Button';
 import {
   GithubLogo, GoogleLogo, MatchLogo, TwitterLogo,
-} from '../components/logos';
+} from '../components/Logos';
 import styles from '../styles/Welcome.module.css';
 import {
   loginWithGitHub, loginWithGoogle, loginWithTwitter,

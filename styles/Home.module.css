@@ -20,12 +20,25 @@
     border-top: 1px solid #eee;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 0 16px;
     min-height: 50px;
 }
 
 .section {
-    height: 100vh;
+    flex: 1;
+}
+.navAnchor:hover {
+    background-color: rgba(0, 153, 255, 0.15);
+    border-radius: 1000px;
+    stroke: red;
+}
+
+.navAnchor:hover > svg {
+    stroke: var(--secondary-color);
+}
+.navAnchor {
+    transition:all linear 0.1s;
+    padding: 5px;
 }

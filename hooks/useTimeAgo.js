@@ -10,8 +10,8 @@ const getValuePerTimeUnit = (_timestamp) => {
   const dateDiff = (_timestamp - Date.now()) / 1000;
   // eslint-disable-next-line no-restricted-syntax
   for (const [unit, seconds] of DATE_UNITS) {
-    if (Math.abs(dateDiff) >= seconds) {
-      const value = Math.ceil(dateDiff / seconds);
+    if (Math.abs(dateDiff) > seconds || unit === 'second') {
+      const value = Math.floor(dateDiff / seconds);
       return { value, unit };
     }
   }

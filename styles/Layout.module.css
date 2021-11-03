@@ -13,7 +13,6 @@
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: auto;
-  /* position: relative; */
 }
 
 @media (min-width: 650px) 
