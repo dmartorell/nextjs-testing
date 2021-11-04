@@ -31,12 +31,13 @@ const HomePage = () => {
           <section className={styles.section}>
             {
             timeline.map(({
-              id, content, avatar, userName, createdAt,
+              id, content, avatar, userName, createdAt, image,
             }) => (
               <Twitt
                 key={id}
                 content={content}
                 avatar={avatar}
+                img={image}
                 userName={userName}
                 createdAt={createdAt}
               />

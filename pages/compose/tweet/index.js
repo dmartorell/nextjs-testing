@@ -77,6 +77,7 @@ const ComposeTweet = () => {
       content: message,
       avatar: user.avatar,
       userId: user.uid,
+      img: imgURL,
     })
       .then(() => {
         router.push('/home');
@@ -160,7 +161,7 @@ const ComposeTweet = () => {
                 onClick={handleCloseImage}
                 width={38}
                 height={38}
-                fill="#1A1a1A"
+                fill="#1A1a1A88"
                 stroke="#FFFFFF"
               />
             </div>

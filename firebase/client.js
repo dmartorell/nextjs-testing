@@ -71,12 +71,13 @@ export const onUserStateChanged = (onChange) => {
 };
 
 export const addTweet = async ({
-  userName, content, avatar, userId,
+  userName, content, avatar, userId, img,
 }) => addDoc(collection(db, 'tweets'), {
   userName,
   content,
   avatar,
   userId,
+  image: img,
   createdAt: new Date(),
   likesCount: 0,
   sharedCount: 0,
