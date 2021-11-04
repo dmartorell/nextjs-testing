@@ -9,6 +9,7 @@ import Button from '../../../components/Button';
 import useUser from '../../../hooks/useUser';
 import styles from '../../../styles/ComposeTweet.module.css';
 import Close from '../../../components/Icons/Close';
+import LoadingProgressBar from '../../../components/LoadingProgressBar';
 
 const COMPOSE_STATUS = {
   USER_UNKNOWN: 0,
@@ -25,6 +26,11 @@ const DRAG_IMAGE_STATES = {
   COMPLETE: 3,
 };
 
+const FILE_TYPES = [
+  'image/jpeg',
+  'image/png',
+];
+
 const ComposeTweet = () => {
   const router = useRouter();
   const user = useUser();
@@ -34,18 +40,22 @@ const ComposeTweet = () => {
   const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE);
   const [task, setTask] = useState(null);
   const [imgURL, setImageURL] = useState(null);
-  const [loadingProgress, setloadingProgress] = useState(0);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     if (task) {
       const onProgress = (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
-        setloadingProgress(progress);
+        setLoadingProgress(progress);
       };
       const onError = (error) => { console.log(error); };
       const onComplete = () => {
-        getDownloadURL(task.snapshot.ref).then(setImageURL);
+        getDownloadURL(task.snapshot.ref).then((image) => {
+          setImageURL(image);
+          setTimeout(() => {
+            setLoadingProgress(0);
+          }, 200);
+        });
       };
 
       task.on('state_changed',
@@ -57,6 +67,7 @@ const ComposeTweet = () => {
 
   const handleCloseImage = () => {
     setImageURL(null);
+    setLoadingProgress(0);
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -77,18 +88,26 @@ const ComposeTweet = () => {
       });
   };
 
-  const handleDragEnter = () => {
+  const handleDragEnter = (event) => {
     setDrag(DRAG_IMAGE_STATES.DRAG_OVER);
+    const { type: fileType } = event.dataTransfer.items[0];
+    if (!FILE_TYPES.includes(fileType)) {
+      setDrag(DRAG_IMAGE_STATES.ERROR);
+    }
   };
   const handleDragLeave = () => {
     setDrag(DRAG_IMAGE_STATES.NONE);
   };
   const handleDrop = (event) => {
     event.preventDefault();
+    const { type: fileType } = event.dataTransfer.items[0];
+    if (FILE_TYPES.includes(fileType)) {
+      setDrag(DRAG_IMAGE_STATES.NONE);
+      const file = event.dataTransfer.files[0];
+      const taskFromDB = uploadImage(file);
+      setTask(taskFromDB);
+    }
     setDrag(DRAG_IMAGE_STATES.NONE);
-    const file = event.dataTransfer.files[0];
-    const taskFromDB = uploadImage(file);
-    setTask(taskFromDB);
   };
 
   return (
@@ -116,9 +135,13 @@ const ComposeTweet = () => {
               // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               className={
+                // eslint-disable-next-line no-nested-ternary
                 drag === DRAG_IMAGE_STATES.DRAG_OVER
                   ? `${styles.textarea} ${styles.textareaDragOver}`
-                  : styles.textarea
+                  : drag === DRAG_IMAGE_STATES.ERROR
+                    ? `${styles.textarea} ${styles.textareaDragOverError}`
+                    : `${styles.textarea}`
+
             }
               placeholder="¿Qué está pasando?"
               name="textarea"
@@ -128,14 +151,7 @@ const ComposeTweet = () => {
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
             />
-            <section style={{ width: '100%' }}>
-              <div style={{
-                height: '10px',
-                width: `${loadingProgress}%`,
-                backgroundColor: 'red',
-              }}
-              />
-            </section>
+            <LoadingProgressBar width={loadingProgress} />
             {imgURL && (
             <div className={styles.imageContainer}>
               <img src={imgURL} alt={imgURL} />
