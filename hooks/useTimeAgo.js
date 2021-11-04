@@ -11,7 +11,7 @@ const getValuePerTimeUnit = (_timestamp) => {
   // eslint-disable-next-line no-restricted-syntax
   for (const [unit, seconds] of DATE_UNITS) {
     if (Math.abs(dateDiff) > seconds || unit === 'second') {
-      const value = Math.floor(dateDiff / seconds);
+      const value = Math.round(dateDiff / seconds);
       return { value, unit };
     }
   }

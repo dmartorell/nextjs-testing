@@ -17,7 +17,9 @@ import {
   orderBy,
 } from 'firebase/firestore';
 
-import { getStorage, ref, uploadBytesResumable } from 'firebase/storage';
+import {
+  getStorage, ref, uploadBytesResumable,
+} from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBQqYchfAU20JWWlOhAoWUeiJ3FNQeFQEM',
@@ -95,6 +97,6 @@ export const fetchLatestTweets = async () => {
 export const uploadImage = (file) => {
   const storage = getStorage();
   const storageRef = ref(storage, `images/${file.name}`);
-  const task = uploadBytesResumable(storageRef, file);
-  return task;
+  const uploadTask = uploadBytesResumable(storageRef, file);
+  return uploadTask;
 };
