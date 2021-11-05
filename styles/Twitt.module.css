@@ -10,6 +10,11 @@
 .date {
     color: #555;
     font-size: 14px;
+    cursor:default;
+}
+.date:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 .twittContainer {
     display: flex;
